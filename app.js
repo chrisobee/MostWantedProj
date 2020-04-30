@@ -23,6 +23,29 @@ function app(people){
   mainMenu(searchResults, people);
 }
 
+function filter(criteria = []){
+  let userInput = prompt("Type 1) Gender \n2) DOB \n3) Height \n4) Weight \n5) Eye Color\n6) Finished")
+  switch(userInput){
+    case "1":
+      criteria.push(prompt("Type male or female").toLowerCase().trim());
+      return filter(criteria);
+    case "2":
+      criteria.push(prompt("DOB in mm/dd/yyyy format").trim());
+      return filter(criteria);
+    case "3":
+      criteria.push(parseInt(prompt("Height in inches")));
+      return filter(criteria);
+    case "4":
+      criteria.push(parseInt(prompt("Weight in pounds")));
+      return filter(criteria);
+    case "5":
+      criteria.push(prompt("Eye color???????").toLowerCase().trim());
+      return filter(criteria);
+    default:
+      
+  }
+}
+
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
