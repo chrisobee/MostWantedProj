@@ -12,7 +12,8 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      filterPeople(people);
+      let results = filterPeople(people);
+      choosePersonFromResults(results);
       break;
       default:
     app(people); // restart app
@@ -85,6 +86,11 @@ function filterPeople(people){
     default:
       break;
   }
+  return people;
+}
+
+function choosePersonFromResults(results){
+  
 }
 
 // Menu function to call once you find who you are looking for
