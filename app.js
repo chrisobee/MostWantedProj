@@ -12,37 +12,78 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      filterPeople(people);
       break;
       default:
     app(people); // restart app
       break;
   }
-  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
 
-function filter(criteria = []){
-  let userInput = prompt("Type 1) Gender \n2) DOB \n3) Height \n4) Weight \n5) Eye Color\n6) Finished")
-  switch(userInput){
+function filterPeople(people){
+  let userChoice = prompt("Search By: \n1) Gender \n2) DOB \n3) Height \n4) Weight \n5) Eye Color\n6) Finished");
+  let filteredPeople = [];
+  let input;
+  switch(userChoice){
     case "1":
-      criteria.push(prompt("Type male or female").toLowerCase().trim());
-      return filter(criteria);
+      input = prompt("Type male or female").toLowerCase().trim();
+      filteredPeople = people.filter(function(el){
+        if(el.gender === input){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+      return filterPeople(filteredPeople);
     case "2":
-      criteria.push(prompt("DOB in mm/dd/yyyy format").trim());
-      return filter(criteria);
+      input = prompt("DOB in mm/dd/yyyy format").trim();
+      filteredPeople = people.filter(function(el){
+        if(el.dob === input){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+      return filterPeople(filteredPeople);
     case "3":
-      criteria.push(parseInt(prompt("Height in inches")));
-      return filter(criteria);
+      input = parseInt(prompt("Height in inches"));
+      filteredPeople = people.filter(function(el){
+        if(el.height === input){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+      return filterPeople(filteredPeople);
     case "4":
-      criteria.push(parseInt(prompt("Weight in pounds")));
-      return filter(criteria);
+      input = parseInt(prompt("Weight in pounds"));
+      filteredPeople = people.filter(function(el){
+        if(el.weight === input){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+      return filterPeople(filteredPeople);
     case "5":
-      criteria.push(prompt("Eye color???????").toLowerCase().trim());
-      return filter(criteria);
+      input = prompt("Eye color???????").toLowerCase().trim();
+      filteredPeople = people.filter(function(el){
+        if(el.eyeColor === input){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+      return filterPeople(filteredPeople);
     default:
-      
+      break;
   }
 }
 
@@ -90,8 +131,7 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
-  return foundPerson;
+  return foundPerson[0];
 }
 
 // alerts a list of people
