@@ -104,10 +104,10 @@ function mainMenu(person, people){
       displayInfo(person);  
     break;
     case "family":
-    // TODO: get person's family
+      getFamily(person, people)
     break;
     case "descendants":
-    // TODO: get person's descendants
+      getDescendants(person, people)
     break;
     case "restart":
     app(people); // restart
@@ -121,6 +121,40 @@ function mainMenu(person, people){
 function displayInfo(person){
   alert("First Name: " + person.firstName + "\nLast Name: " + person.lastName + "\nGender: " + person.gender + "\nDOB: " + person.dob + 
   "\nHeight: " + person.height + "\nWeight: " + person.weight + "\nEye Color: " + person.eyeColor + "\nOccupation: " + person.occupation)
+}
+function getFamily(person, people){
+  let kids  = people.filter(function(el){
+    if(el.parents.includes(person.id)){
+      return true;
+    }
+  });
+  let spouse = people.filter(function(el){
+    if(el.id === person.currentSpouse){
+      return true;
+    }
+  });
+  let parents = people.filter(function(el){
+    if(person.parents.includes(el.id)){
+      return true;
+    }
+  });
+  let family = kids.concat(spouse, parents);
+  displayFamily(family)  
+}
+function displayFamily(family){
+  for(let i = 0; i < family.length; i++){
+    alert("Id: " + family[i].id + "\nName: " + family[i].firstName + " " + family[i].lastName)
+  }
+}
+function getDescendants(person, people, descendants){
+  descendants = people.filter(function(el){
+    if(el.parents.includes(person.id)){
+      return true;
+    }
+  });
+  for(let i = 0; i < descendants.length; i++){
+    return getDescendants(descendants[i], people, descendants);
+  }
 }
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
