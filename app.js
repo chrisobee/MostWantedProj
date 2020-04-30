@@ -12,7 +12,8 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      filterPeople(people);
+      let results = filterPeople(people);
+      searchResults = choosePersonFromResults(results);
       break;
       default:
     app(people); // restart app
@@ -85,6 +86,31 @@ function filterPeople(people){
     default:
       break;
   }
+  return people;
+}
+
+function displayResults(results){
+  let displayArray = [];
+  for(let i = 0; i < results.length; i++){
+    let personInfo = `Choice Number: ${i} \nFirst Name: ${results[i].firstName} \nLast Name: ${results[i].lastName}`
+    displayArray.push(personInfo);
+  }
+  return displayArray;
+}
+
+function choosePersonFromResults(results){
+  let validInput = false;
+  let choice;
+  while(validInput == false){
+    choice = parseInt(prompt(`Pick the choice number of the person you'd like information for.\n${displayResults(results).join("\n\n")}`));
+    if((choice) >= results.length){
+      alert("Invalid Choice");
+    }
+    else{
+      validInput = true;
+    }
+  }
+  return results[choice];
 }
 
 // Menu function to call once you find who you are looking for
@@ -101,7 +127,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-      displayInfo(person);  
+      alert(displayInfo(person));  
     break;
     case "family":
       getFamily(person, people)
@@ -119,8 +145,9 @@ function mainMenu(person, people){
   }
 }
 function displayInfo(person){
-  alert("First Name: " + person.firstName + "\nLast Name: " + person.lastName + "\nGender: " + person.gender + "\nDOB: " + person.dob + 
+  let info = ("First Name: " + person.firstName + "\nLast Name: " + person.lastName + "\nGender: " + person.gender + "\nDOB: " + person.dob + 
   "\nHeight: " + person.height + "\nWeight: " + person.weight + "\nEye Color: " + person.eyeColor + "\nOccupation: " + person.occupation)
+  return info;
 }
 function getFamily(person, people){
   let kids  = people.filter(function(el){
