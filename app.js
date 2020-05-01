@@ -123,7 +123,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", familyValidation);
 
   switch(displayOption){
     case "info":
@@ -259,6 +259,10 @@ function maleOrFemale(input){
 function validEyeColor(input){
   let validColors = ["brown", "blue", "green", "hazel", "black"];
   return validColors.includes(input.toLowerCase());
+}
+
+function familyValidation(input){
+  return input.toLowerCase() == "descendants" || input.toLowerCase() == "family" || input.toLowerCase() == "info";
 }
 
 // helper function to pass in as default promptFor validation
