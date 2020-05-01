@@ -194,18 +194,28 @@ function displayFamily(family, connection){
     alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, family=[], counter=0){
+function getDescendants(person, people, family=[], counter=-1){
   let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
     }
   });
   family = family.concat(descendants);
-  counter = (descendants.length - 1);
-  if(counter > 0){
-    return getDescendants(descendants[counter], people, family, counter-1);
+
+  //if children of person don't have children, check if other children have children
+  if(descendants.length == 0 && (counter + 1) != family.length){
+    counter++;
+    return getDescendants(family[counter], people, family, counter);
   }
-  return displayDescendants(family)
+  //base case to break out of recursion
+  else if(descendants.length == 0 && (counter + 1) == family.length){
+    return displayDescendants(family);
+  }
+  //If children have children, keep the recursion going
+  else{
+    counter++;
+    return getDescendants(family[counter], people, family, counter);
+  }
 }
 function displayDescendants(family){
   let displayArr = [];
