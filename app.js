@@ -194,7 +194,7 @@ function displayFamily(family, connection){
     alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, family=[], counter=0){
+function getDescendants(person, people, family=[], counter=-1){
   let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
