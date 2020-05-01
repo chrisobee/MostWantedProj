@@ -245,7 +245,20 @@ const data = [
 		"eyeColor": "brown",
 		"occupation": "assistant",
 		"parents": [693243224, 888201200],
-		"currentSpouse": null
+		"currentSpouse": 222222222
+	},
+	{
+		"id": 222222222,
+		"firstName": "King",
+		"lastName": "Madden",
+		"gender": "male",
+		"dob": "12/11/1961",
+		"height": 63,
+		"weight": 241,
+		"eyeColor": "brown",
+		"occupation": "assistant",
+		"parents": [],
+		"currentSpouse": 969837479
 	},
 	{
 		"id": 313207561,
@@ -272,6 +285,19 @@ const data = [
 		"occupation": "doctor",
 		"parents": [],
 		"currentSpouse": 313207561
+	},
+	{
+		"id": 111111111,
+		"firstName": "Austin",
+		"lastName": "Madden",
+		"gender": "male",
+		"dob": "2/19/1990",
+		"height": 80,
+		"weight": 130,
+		"eyeColor": "hazel",
+		"occupation": "doctor",
+		"parents": [969837479, 222222222],
+		"currentSpouse": null
 	},
 	{
 		"id": 313998000,

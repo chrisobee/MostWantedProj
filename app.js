@@ -201,19 +201,25 @@ function getDescendants(person, people, family=[], counter=0){
     }
   });
   family = family.concat(descendants);
-  counter = (descendants.length - 1);
-  if(counter > 0){
-    return getDescendants(descendants[counter], people, family, counter-1);
+  counter++;
+  if(counter == family.length){
+    return displayDescendants(family);
   }
-  return displayDescendants(family)
+  return getDescendants(family[counter], people, family, counter);
 }
 function displayDescendants(family){
   let displayArr = [];
-  for(let i = 0; i < family.length; i++){
-    let personInfo = `First Name: ${family[i].firstName} \nLast Name: ${family[i].lastName} \nDOB: ${family[i].dob}`;
-    displayArr.push(personInfo);
+  if(family.length == 0){
+    alert("NO DESCENDANTS!")
   }
-  alert("Descendants:\n" + displayArr.join("\n\n"));
+  else{
+    for(let i = 0; i < family.length; i++){
+      let personInfo = `First Name: ${family[i].firstName} \nLast Name: ${family[i].lastName} \nDOB: ${family[i].dob}`;
+      displayArr.push(personInfo);
+    }
+    alert("Descendants:\n" + displayArr.join("\n\n"));
+  }
+  
 }
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
