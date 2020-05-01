@@ -123,7 +123,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", familyValidation);
 
   switch(displayOption){
     case "info":
@@ -243,6 +243,42 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+function validDate(input){
+  let splitString = input.split("/", 3);
+  let mm = splitString[0];
+  let dd = splitString[1];
+  let yyyy = splitString[2];
+
+  if(parseInt(mm) > 0 && parseInt(mm) <= 12 && parseInt(dd) > 0 && parseInt(dd) <= 31 && parseInt(yyyy) <= 2020 && parseInt(yyyy) > 1900){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function integerInput(input){
+  return isFinite(input);
+}
+
+function maleOrFemale(input){
+  if(input.toLowerCase() == "male" || input.toLowerCase() == "female"){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function validEyeColor(input){
+  let validColors = ["brown", "blue", "green", "hazel", "black"];
+  return validColors.includes(input.toLowerCase());
+}
+
+function familyValidation(input){
+  return input.toLowerCase() == "descendants" || input.toLowerCase() == "family" || input.toLowerCase() == "info";
 }
 
 // helper function to pass in as default promptFor validation
