@@ -187,10 +187,9 @@ function getDescendants(person, people, family=[], counter=0){
     }
   });
   family = family.concat(descendants);
-  let kids = descendants;
-  counter = (kids.length - 1);
+  counter = (descendants.length - 1);
   if(counter > 0){
-    return getDescendants(kids[counter], people, family);
+    return getDescendants(descendants[counter], people, family, counter-1);
   }
   return displayDescendants(family)
 }
