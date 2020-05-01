@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = prompt("DOB in mm/dd/yyyy format").trim();
+      input = promptFor("DOB in mm/dd/yyyy format", validDate);
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -51,7 +51,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "3":
-      input = parseInt(prompt("Height in inches"));
+      input = promptFor("Height in inches", integerInput);
       filteredPeople = people.filter(function(el){
         if(el.height === input){
           return true;
@@ -62,7 +62,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "4":
-      input = parseInt(prompt("Weight in pounds"));
+      input = promptFor("Weight in pounds", integerInput);
       filteredPeople = people.filter(function(el){
         if(el.weight === input){
           return true;
@@ -73,7 +73,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "5":
-      input = prompt("Eye color???????").toLowerCase().trim();
+      input = promptFor("Eye color?", validEyeColor);
       filteredPeople = people.filter(function(el){
         if(el.eyeColor === input){
           return true;
@@ -150,28 +150,42 @@ function displayInfo(person){
   return info;
 }
 function getFamily(person, people){
+  //Find all siblings for person
   let siblings;
   for(let i = 0; i < person.parents.length; i++){
     siblings  = people.filter(function(el){
       if(el.parents.includes(person.parents[i]) && el.id != person.id){
         return true;
       }
+      else{
+        return false;
+      }
     });
   }
+  
+  //Display all siblings to an alert
   let str1 = "Sibling: "
   displayFamily(siblings, str1)
+
+  //Find spouse of person
   let spouse = people.filter(function(el){
     if(el.id === person.currentSpouse){
       return true;
     }
   });
+
+  //Display spouse to alert
   let str2 = "Spouse: "
   displayFamily(spouse, str2)
+
+  //Find parents of person
   let parents = people.filter(function(el){
     if(person.parents.includes(el.id)){
       return true;
     }
   });
+
+  //Display parents to alert
   let str3 = "Parent: "
   displayFamily(parents, str3)  
 }
