@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = promptFor("DOB in mm/dd/yyyy format", validDate);
+      input = prompt("DOB in mm/dd/yyyy format").trim();
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -51,7 +51,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "3":
-      input = parseInt(promptFor("Height in inches", integerInput));
+      input = parseInt(prompt("Height in inches"));
       filteredPeople = people.filter(function(el){
         if(el.height === input){
           return true;
@@ -62,7 +62,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "4":
-      input = parseInt(promptFor("Weight in pounds", integerInput));
+      input = parseInt(prompt("Weight in pounds"));
       filteredPeople = people.filter(function(el){
         if(el.weight === input){
           return true;
@@ -73,7 +73,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "5":
-      input = promptFor("Eye color?", validEyeColor).toLowerCase().trim();
+      input = prompt("Eye color???????").toLowerCase().trim();
       filteredPeople = people.filter(function(el){
         if(el.eyeColor === input){
           return true;
@@ -180,18 +180,27 @@ function displayFamily(family, connection){
     alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, family=[],){
+function getDescendants(person, people, family=[], counter=0){
   let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
     }
   });
   family = family.concat(descendants);
-  for(let i = 0; i < descendants.length; i++){
-    getDescendants(descendants[i], people, family);
+  let kids = descendants;
+  let counter = kids.length;
+  if(counter > 0){
+    return getDescendants(kids[counter], people, family, counter-1);
   }
 }
-function displayDescendants(family, display=[])
+function displayDescendants(family){
+  let displayArr = []
+  for(let i = 0; i < family.length; i++){
+    let personInfo = `First Name: ${family[i].firstName} \nLast Name: ${family[i].lastName}`
+    displayArr.push(personInfo);
+  }
+  alert(displayArr.join("\n\n"))
+}
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
@@ -205,6 +214,13 @@ function searchByName(people){
     }
   })
   return foundPerson[0];
+}
+
+// alerts a list of people
+function displayPeople(people){
+  alert(people.map(function(person){
+    return person.firstName + " " + person.lastName;
+  }).join("\n"));
 }
 
 function displayPerson(person){
@@ -227,38 +243,6 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
-}
-
-function validDate(input){
-  let splitString = input.split("/", 3);
-  let mm = splitString[0];
-  let dd = splitString[1];
-  let yyyy = splitString[2];
-
-  if(parseInt(mm) > 0 && parseInt(mm) <= 12 && parseInt(dd) > 0 && parseInt(dd) <= 31 && parseInt(yyyy) <= 2020 && parseInt(yyyy) > 1900){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
-
-function integerInput(input){
-  return isFinite(input);
-}
-
-function maleOrFemale(input){
-  if(input.toLowerCase() == "male" || input.toLowerCase() == "female"){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
-
-function validEyeColor(input){
-  let validColors = ["brown", "blue", "green", "hazel", "black"];
-  return validColors.includes(input.toLowerCase());
 }
 
 // helper function to pass in as default promptFor validation
