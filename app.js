@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = promptFor("DOB in mm/dd/yyyy format", validDate).trim();
+      input = promptFor("DOB in mm/dd/yyyy format", validDate);
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -51,7 +51,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "3":
-      input = parseInt(prompt("Height in inches"));
+      input = parseInt(promptFor("Height in inches", integerInput));
       filteredPeople = people.filter(function(el){
         if(el.height === input){
           return true;
@@ -62,7 +62,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "4":
-      input = parseInt(prompt("Weight in pounds"));
+      input = parseInt(promptFor("Weight in pounds", integerInput));
       filteredPeople = people.filter(function(el){
         if(el.weight === input){
           return true;
@@ -73,7 +73,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "5":
-      input = prompt("Eye color???????").toLowerCase().trim();
+      input = promptFor("Eye color?", validEyeColor).toLowerCase().trim();
       filteredPeople = people.filter(function(el){
         if(el.eyeColor === input){
           return true;
@@ -242,14 +242,22 @@ function validDate(input){
   }
 }
 
+function integerInput(input){
+  return isFinite(input);
+}
+
 function maleOrFemale(input){
-  let response = input.toLowerCase();
-  if(response == "male" || response == "female"){
+  if(input.toLowerCase() == "male" || input.toLowerCase() == "female"){
     return true;
   }
   else{
     return false;
   }
+}
+
+function validEyeColor(input){
+  let validColors = ["brown", "blue", "green", "hazel", "black"];
+  return validColors.includes(input.toLowerCase());
 }
 
 // helper function to pass in as default promptFor validation
