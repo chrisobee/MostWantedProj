@@ -150,37 +150,45 @@ function displayInfo(person){
   return info;
 }
 function getFamily(person, people){
-  let kids  = people.filter(function(el){
-    if(el.parents.includes(person.id)){
-      return true;
-    }
-  });
+  let siblings;
+  for(let i = 0; i < person.parents.length; i++){
+    siblings  = people.filter(function(el){
+      if(el.parents.includes(person.parents[i]) && el.id != person.id){
+        return true;
+      }
+    });
+  }
+  let str1 = "Sibling: "
+  displayFamily(siblings, str1)
   let spouse = people.filter(function(el){
     if(el.id === person.currentSpouse){
       return true;
     }
   });
+  let str2 = "Spouse: "
+  displayFamily(spouse, str2)
   let parents = people.filter(function(el){
     if(person.parents.includes(el.id)){
       return true;
     }
   });
-  let family = kids.concat(spouse, parents);
-  displayFamily(family)  
+  let str3 = "Parents: "
+  displayFamily(parents, str3)  
 }
-function displayFamily(family){
+function displayFamily(family, connection){
   for(let i = 0; i < family.length; i++){
-    alert("Id: " + family[i].id + "\nName: " + family[i].firstName + " " + family[i].lastName)
+    alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, descendants){
-  descendants = people.filter(function(el){
+function getDescendants(person, people, family=[]){
+  let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
     }
   });
+  family = family.concat(descendants);
   for(let i = 0; i < descendants.length; i++){
-    return getDescendants(descendants[i], people, descendants);
+    return getDescendants(descendants[i], people, family);
   }
 }
 function searchByName(people){
