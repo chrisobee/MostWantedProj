@@ -180,7 +180,7 @@ function displayFamily(family, connection){
     alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, family=[], counter=0){
+function getDescendants(person, people, family=[]){
   let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
@@ -188,8 +188,7 @@ function getDescendants(person, people, family=[], counter=0){
   });
   family = family.concat(descendants);
   let kids = descendants;
-  let counter = kids.length;
-  if(counter > 0){
+  for(let i = 0; i < kids.length; i++){
     return getDescendants(kids[counter], people, family, counter-1);
   }
 }
