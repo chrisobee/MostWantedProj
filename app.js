@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = promptFor("DOB in mm/dd/yyyy format", validDate);
+      input = prompt("DOB in mm/dd/yyyy format").trim();
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -51,7 +51,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "3":
-      input = parseInt(promptFor("Height in inches", integerInput));
+      input = parseInt(prompt("Height in inches"));
       filteredPeople = people.filter(function(el){
         if(el.height === input){
           return true;
@@ -62,7 +62,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "4":
-      input = parseInt(promptFor("Weight in pounds", integerInput));
+      input = parseInt(prompt("Weight in pounds"));
       filteredPeople = people.filter(function(el){
         if(el.weight === input){
           return true;
@@ -73,7 +73,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "5":
-      input = promptFor("Eye color?", validEyeColor).toLowerCase().trim();
+      input = prompt("Eye color???????").toLowerCase().trim();
       filteredPeople = people.filter(function(el){
         if(el.eyeColor === input){
           return true;
@@ -180,16 +180,26 @@ function displayFamily(family, connection){
     alert(connection + family[i].firstName + " " + family[i].lastName)
   }
 }
-function getDescendants(person, people, family=[],){
+function getDescendants(person, people, family=[], counter=0){
   let descendants = people.filter(function(el){
     if(el.parents.includes(person.id)){
       return true;
     }
   });
   family = family.concat(descendants);
-  for(let i = 0; i < descendants.length; i++){
-    getDescendants(descendants[i], people, family);
+  let kids = descendants;
+  let counter = kids.length;
+  if(counter > 0){
+    return getDescendants(kids[counter], people, family, counter-1);
   }
+}
+function displayDescendants(family){
+  let displayArr = []
+  for(let i = 0; i < family.length; i++){
+    let personInfo = `First Name: ${family[i].firstName} \nLast Name: ${family[i].lastName}`
+    displayArr.push(personInfo);
+  }
+  alert(displayArr.join("\n\n"))
 }
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
@@ -204,6 +214,13 @@ function searchByName(people){
     }
   })
   return foundPerson[0];
+}
+
+// alerts a list of people
+function displayPeople(people){
+  alert(people.map(function(person){
+    return person.firstName + " " + person.lastName;
+  }).join("\n"));
 }
 
 function displayPerson(person){
