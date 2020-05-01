@@ -29,7 +29,7 @@ function filterPeople(people){
   let input;
   switch(userChoice){
     case "1":
-      input = prompt("Type male or female").toLowerCase().trim();
+      input = promptFor("Type male or female", maleOrFemale);
       filteredPeople = people.filter(function(el){
         if(el.gender === input){
           return true;
@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = prompt("DOB in mm/dd/yyyy format").trim();
+      input = promptFor("DOB in mm/dd/yyyy format", validDate);
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -51,7 +51,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "3":
-      input = parseInt(prompt("Height in inches"));
+      input = parseInt(promptFor("Height in inches", integerInput));
       filteredPeople = people.filter(function(el){
         if(el.height === input){
           return true;
@@ -62,7 +62,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "4":
-      input = parseInt(prompt("Weight in pounds"));
+      input = parseInt(promptFor("Weight in pounds", integerInput));
       filteredPeople = people.filter(function(el){
         if(el.weight === input){
           return true;
@@ -73,7 +73,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "5":
-      input = prompt("Eye color???????").toLowerCase().trim();
+      input = promptFor("Eye color?", validEyeColor).toLowerCase().trim();
       filteredPeople = people.filter(function(el){
         if(el.eyeColor === input){
           return true;
@@ -207,13 +207,6 @@ function searchByName(people){
   return foundPerson[0];
 }
 
-// alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
-}
-
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
@@ -234,6 +227,38 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+function validDate(input){
+  let splitString = input.split("/", 3);
+  let mm = splitString[0];
+  let dd = splitString[1];
+  let yyyy = splitString[2];
+
+  if(parseInt(mm) > 0 && parseInt(mm) <= 12 && parseInt(dd) > 0 && parseInt(dd) <= 31 && parseInt(yyyy) <= 2020 && parseInt(yyyy) > 1900){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function integerInput(input){
+  return isFinite(input);
+}
+
+function maleOrFemale(input){
+  if(input.toLowerCase() == "male" || input.toLowerCase() == "female"){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function validEyeColor(input){
+  let validColors = ["brown", "blue", "green", "hazel", "black"];
+  return validColors.includes(input.toLowerCase());
 }
 
 // helper function to pass in as default promptFor validation
