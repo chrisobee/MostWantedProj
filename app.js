@@ -191,7 +191,6 @@ function getDescendants(person, people, family=[],){
     getDescendants(descendants[i], people, family);
   }
 }
-function displayDescendants(family, display=[])
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
