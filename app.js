@@ -29,7 +29,7 @@ function filterPeople(people){
   let input;
   switch(userChoice){
     case "1":
-      input = prompt("Type male or female").toLowerCase().trim();
+      input = promptFor("Type male or female", maleOrFemale);
       filteredPeople = people.filter(function(el){
         if(el.gender === input){
           return true;
@@ -40,7 +40,7 @@ function filterPeople(people){
       });
       return filterPeople(filteredPeople);
     case "2":
-      input = prompt("DOB in mm/dd/yyyy format").trim();
+      input = promptFor("DOB in mm/dd/yyyy format", validDate).trim();
       filteredPeople = people.filter(function(el){
         if(el.dob === input){
           return true;
@@ -198,13 +198,6 @@ function searchByName(people){
   return foundPerson[0];
 }
 
-// alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
-}
-
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
@@ -225,6 +218,30 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+function validDate(input){
+  let splitString = input.split("/", 3);
+  let mm = splitString[0];
+  let dd = splitString[1];
+  let yyyy = splitString[2];
+
+  if(parseInt(mm) > 0 && parseInt(mm) <= 12 && parseInt(dd) > 0 && parseInt(dd) <= 31 && parseInt(yyyy) <= 2020 && parseInt(yyyy) > 1900){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function maleOrFemale(input){
+  let response = input.toLowerCase();
+  if(response == "male" || response == "female"){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 // helper function to pass in as default promptFor validation
